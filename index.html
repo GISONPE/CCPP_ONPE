@@ -8,8 +8,6 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/MarkerCluster.css">
-        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
         <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <style>
@@ -36,7 +34,6 @@
         <script src="js/labels.js"></script>
         <script src="js/leaflet.wms.js"></script>
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
-        <script src="js/leaflet.markercluster.js"></script>
         <script src="js/leaflet-search.js"></script>
         <script src="data/LOCALES_2023_8.js"></script>
         <script src="data/ALEJADOS_CPP_9.js"></script>
@@ -194,73 +191,47 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['NRO'] !== null ? autolinker.link(feature.properties['NRO'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Ubigeo</th>\
+                        <td>' + (feature.properties['UBIGEO'] !== null ? autolinker.link(feature.properties['UBIGEO'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['UBIGEO'] !== null ? autolinker.link(feature.properties['UBIGEO'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">DPTO</th>\
+                        <th scope="row">Departamento</th>\
                         <td>' + (feature.properties['DPTO'] !== null ? autolinker.link(feature.properties['DPTO'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">PROVINCIA</th>\
+                        <th scope="row">Provincia</th>\
                         <td>' + (feature.properties['PROVINCIA'] !== null ? autolinker.link(feature.properties['PROVINCIA'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">DISTRITO</th>\
+                        <th scope="row">Distrito</th>\
                         <td>' + (feature.properties['DISTRITO'] !== null ? autolinker.link(feature.properties['DISTRITO'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">ID_LOCAL</th>\
+                        <th scope="row">Id Local</th>\
                         <td>' + (feature.properties['ID_LOCAL'] !== null ? autolinker.link(feature.properties['ID_LOCAL'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">NOMBRE</th>\
+                        <th scope="row">Nombre</th>\
                         <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">DIRECCION</th>\
+                        <th scope="row">Dirección</th>\
                         <td>' + (feature.properties['DIRECCION'] !== null ? autolinker.link(feature.properties['DIRECCION'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">CCPP_NOM</th>\
+                        <th scope="row">Centro Poblado</th>\
                         <td>' + (feature.properties['CCPP_NOM'] !== null ? autolinker.link(feature.properties['CCPP_NOM'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">TECNOLOGIA</th>\
-                        <td>' + (feature.properties['TECNOLOGIA'] !== null ? autolinker.link(feature.properties['TECNOLOGIA'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">CCPP</th>\
-                        <td>' + (feature.properties['CCPP'] !== null ? autolinker.link(feature.properties['CCPP'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">VRAEM_DESC</th>\
+                        <th scope="row">Vraem</th>\
                         <td>' + (feature.properties['VRAEM_DESC'] !== null ? autolinker.link(feature.properties['VRAEM_DESC'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">X</th>\
-                        <td>' + (feature.properties['X'] !== null ? autolinker.link(feature.properties['X'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Y</th>\
-                        <td>' + (feature.properties['Y'] !== null ? autolinker.link(feature.properties['Y'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">CONTINGENC</th>\
-                        <td>' + (feature.properties['CONTINGENC'] !== null ? autolinker.link(feature.properties['CONTINGENC'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">ALEJADOS</th>\
-                        <td>' + (feature.properties['ALEJADOS'] !== null ? autolinker.link(feature.properties['ALEJADOS'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
         function style_LOCALES_2023_8_0(feature) {
-            switch(String(feature.properties['CCPP'])) {
+            switch(String(feature.properties['q2wHide_CCPP'])) {
                 case '0':
                     return {
                 pane: 'pane_LOCALES_2023_8',
@@ -313,12 +284,8 @@
                 return L.circleMarker(latlng, style_LOCALES_2023_8_0(feature));
             },
         });
-        var cluster_LOCALES_2023_8 = new L.MarkerClusterGroup({showCoverageOnHover: false,
-            spiderfyDistanceMultiplier: 2});
-        cluster_LOCALES_2023_8.addLayer(layer_LOCALES_2023_8);
-
         bounds_group.addLayer(layer_LOCALES_2023_8);
-        cluster_LOCALES_2023_8.addTo(map);
+        map.addLayer(layer_LOCALES_2023_8);
         function pop_ALEJADOS_CPP_9(feature, layer) {
             layer.on({
                 mouseout: function(e) {
@@ -386,7 +353,7 @@
                 pane: 'pane_ALEJADOS_CPP_9',
                 radius: 2.0,
                 opacity: 1,
-                color: 'rgba(243,25,50,1.0)',
+                color: 'rgba(240,243,83,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
@@ -417,18 +384,6 @@
         });
         bounds_group.addLayer(layer_ALEJADOS_CPP_9);
         map.addLayer(layer_ALEJADOS_CPP_9);
-        map.on("zoomend", function(e) {
-            if (map.getZoom() <= 19 && map.getZoom() >= 10) {
-                map.addLayer(layer_ALEJADOS_CPP_9);
-            } else if (map.getZoom() > 19 || map.getZoom() < 10) {
-                map.removeLayer(layer_ALEJADOS_CPP_9);
-            }
-        });
-            if (map.getZoom() <= 19 && map.getZoom() >= 10) {
-                map.addLayer(layer_ALEJADOS_CPP_9);
-            } else if (map.getZoom() > 19 || map.getZoom() < 10) {
-                map.removeLayer(layer_ALEJADOS_CPP_9);
-            }
             var title = new L.Control();
             title.onAdd = function (map) {
                 this._div = L.DomUtil.create('div', 'info');
@@ -465,7 +420,7 @@
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/ALEJADOS_CPP_9.png" /> ALEJADOS_CPP': layer_ALEJADOS_CPP_9,'LOCALES_2023<br /><table><tr><td style="text-align: center;"><img src="legend/LOCALES_2023_8_MesaDistrital0.png" /></td><td>Mesa Distrital</td></tr><tr><td style="text-align: center;"><img src="legend/LOCALES_2023_8_MesaenCCPP1.png" /></td><td>Mesa en CCPP</td></tr></table>': cluster_LOCALES_2023_8,"Capital  Departamental": layer_CapitalDepartamental_7,"Capital Provincial": layer_CapitalProvincial_6,"Capital Distrital": layer_CapitalDistrital_5,"Centros Poblados": layer_CentrosPoblados_4,"Límite Departamental": layer_LmiteDepartamental_3,"Límite Provincial": layer_LmiteProvincial_2,"Límite Distrital": layer_LmiteDistrital_1,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/ALEJADOS_CPP_9.png" /> ALEJADOS_CPP': layer_ALEJADOS_CPP_9,'LOCALES_2023<br /><table><tr><td style="text-align: center;"><img src="legend/LOCALES_2023_8_MesaDistrital0.png" /></td><td>Mesa Distrital</td></tr><tr><td style="text-align: center;"><img src="legend/LOCALES_2023_8_MesaenCCPP1.png" /></td><td>Mesa en CCPP</td></tr></table>': layer_LOCALES_2023_8,"Capital  Departamental": layer_CapitalDepartamental_7,"Capital Provincial": layer_CapitalProvincial_6,"Capital Distrital": layer_CapitalDistrital_5,"Centros Poblados": layer_CentrosPoblados_4,"Límite Departamental": layer_LmiteDepartamental_3,"Límite Provincial": layer_LmiteProvincial_2,"Límite Distrital": layer_LmiteDistrital_1,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
         setBounds();
         var i = 0;
         layer_ALEJADOS_CPP_9.eachLayer(function(layer) {
